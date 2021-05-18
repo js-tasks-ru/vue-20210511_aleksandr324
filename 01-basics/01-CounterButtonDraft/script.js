@@ -1,3 +1,9 @@
-// import Vue from './vendor/vue.esm.browser.js';
+import Vue from "./vendor/vue.esm.browser.js";
 
-// Требуется создать Vue приложение
+const app = new Vue({
+  el: '#app',
+  data: {
+    counter: 0
+  }
+
+});
