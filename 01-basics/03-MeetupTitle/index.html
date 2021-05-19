@@ -6,7 +6,15 @@
 </head>
 <body>
 
-<!-- Решение -->
+<div id="app">
+  <template v-for="item in items">
+    <input type="radio" v-bind:value="item.courseName" v-model="selecting" >
+    <label>{{ item.buttonNumber }}</label>
+  </template>
+  <br>
+  <span v-if="selecting !== null">{{ selecting }}</span>
+
+</div>
 
 <script type="module" src="script.js"></script>
 </body>
