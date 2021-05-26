@@ -52,28 +52,31 @@ const app = new Vue({
   el: "#app",
   data: {
     meetapInfo: null,
-    agendaItemIcons: agendaItemIcons,
-    agendaItemDefaultTitles: agendaItemDefaultTitles
+    updatedInfo: null,
+    agendaItemIcons,
+    agendaItemDefaultTitles
   },
-  mounted() {
-    fetchMeetups().then((fetchMeetups) => {
-    this.meetapInfo = {
-      title: fetchMeetups.title,
-      place: fetchMeetups.place,
-      organizer: fetchMeetups.organizer,
-      description: fetchMeetups.description,
-      date: new Date(fetchMeetups.date),
-      cover: fetchMeetups.imageId && `https://course-vue.javascript.ru/api/images/${fetchMeetups.imageId}`,
-      coverStyle: fetchMeetups.imageId && { "--bg-url": `url(${getImageUrlByImageId(`${fetchMeetups.imageId}`)})` },
-      localeDate: new Date(fetchMeetups.date).toLocaleString(navigator.language, {
+  computed: {
+    getLocaleDate() {
+      return this.meetapInfo.localeDate = new Date(this.meetapInfo.date).toLocaleString(navigator.language, {
         year: "numeric",
         month: "long",
         day: "numeric"
-      }),
-      dateOnlyString: new Date(fetchMeetups.date).toISOString().split("T")[0],
-      agenda: fetchMeetups.agenda
-    };
-  })
-  }
+      });
+    },
+    getAgendaMode() {
+      return this.meetapInfo.agenda = this.meetapInfo.agenda.map((agenda) => ({
+        ...agenda,
+        title: agenda.title !== null ? agenda.title : agendaItemDefaultTitles[agenda.type],
+          }))
+    }
 
+  },
+  mounted() {
+    fetchMeetups().then((meetups) => {
+      this.meetapInfo = meetups;
+      this.meetapInfo.coverStyle = this.meetapInfo.imageId && { '--bg-url': `url(https://course-vue.javascript.ru/api/images/${this.meetapInfo.imageId})` };
+    });
+
+  }
 });

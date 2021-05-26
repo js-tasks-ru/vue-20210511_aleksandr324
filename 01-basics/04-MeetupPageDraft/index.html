@@ -16,6 +16,7 @@
 <body>
 <div id="app" v-cloak>
   <div class="main" v-if="meetapInfo">
+
     <div class="meetup-cover" :style="meetapInfo.coverStyle">
       <h1 class="meetup-cover__title">{{ meetapInfo.title }}</h1>
     </div>
@@ -27,19 +28,15 @@
           <p class="meetup-description">{{ meetapInfo.description }}</p>
 
           <h3>Программа</h3>
-          <p class="meetup-agenda__empty">Программа пока пуста, но когда-нибудь в ней обязательно что-нибудь
-            появится!</p>
-
           <template v-if="meetapInfo.agenda">
-            <div v-for="oneIvent in meetapInfo.agenda" :key="oneIvent.id" class="meetup-agenda__item">
+            <div v-for="oneIvent in getAgendaMode" :key="oneIvent.id" class="meetup-agenda__item">
               <div class="meetup-agenda__item-col">
                 <img class="icon" alt="icon"
-                     :src="'assets/icons/icon-'+ agendaItemIcons[`${oneIvent.type}`] + '.svg'" />
+                     :src="'assets/icons/icon-'+ agendaItemIcons[oneIvent.type] + '.svg'" />
               </div>
               <div class="meetup-agenda__item-col">{{ oneIvent.startsAt }} - {{ oneIvent.endsAt }}</div>
               <div class="meetup-agenda__item-col">
-                <h5 v-if="oneIvent.title !== null" class="meetup-agenda__title">{{ oneIvent.title }}</h5>
-                <h5 v-else class="meetup-agenda__title">{{ agendaItemDefaultTitles[`${oneIvent.type}`] }}</h5>
+                <h5 class="meetup-agenda__title">{{ oneIvent.title }}</h5>
                 <p v-if="oneIvent.type === `talk`">
                   <span> {{ oneIvent.speaker }}</span>
                   <span class="meetup-agenda__dot"></span>
@@ -68,7 +65,7 @@
             </li>
             <li>
               <img class="icon info-list__icon" alt="icon" src="assets/icons/icon-cal-lg.svg" />
-              <time datetime="2020-02-31">{{ meetapInfo.localeDate }}</time>
+              <time datetime="2020-02-31">{{ getLocaleDate }}</time>
             </li>
           </ul>
         </div>

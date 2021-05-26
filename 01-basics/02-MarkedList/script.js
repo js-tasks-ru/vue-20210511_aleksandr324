@@ -35,24 +35,15 @@ const app = new Vue({
   el: "#app",
   data: {
     search: '',
-    items: []
+    emails
   },
 
-  mounted() {
-    emails.forEach((email) =>
-      this.items.push({ value: email, filtered: false })
-    );
-  },
-
-  methods: {
+  computed: {
     searchResult() {
-      this.items.forEach(item =>
-        item.filtered = this.search === "" ? false : item.value.toLowerCase().includes(this.search.toLowerCase()));
-    }
-  },
-  watch: {
-    search() {
-      this.searchResult();
-    }
+      return this.emails.map((email) => ({
+        value: email,
+        filtered: this.search === "" ? false : email.toLowerCase().includes(this.search.toLowerCase()),
+      }));
+    },
   }
 });
