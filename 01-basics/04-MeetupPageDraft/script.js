@@ -52,7 +52,6 @@ const app = new Vue({
   el: "#app",
   data: {
     meetapInfo: null,
-    updatedInfo: null,
     agendaItemIcons,
     agendaItemDefaultTitles
   },
