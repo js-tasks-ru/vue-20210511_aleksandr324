@@ -12,17 +12,19 @@
 <body>
 
 <div id="app">
-  <input type="text" />
+  <div class="input-group input-group_icon input-group_icon-left">
+    <input
+      type="text"
+      placeholder="Поиск"
+      v-model="search"
+    />
+  </div>
   <ul>
-    <li>Email</li>
-    <li class="marked">Email</li>
-    <li class="marked">Email</li>
-    <li>Email</li>
-    <li>Email</li>
-    <li>...</li>
+    <li v-for="item in searchResult" :key="item" :class="{ 'marked': item.filtered }">
+      {{ item.value }}
+    </li>
   </ul>
 </div>
-
 <script type="module" src="script.js"></script>
 </body>
 </html>

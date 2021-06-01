@@ -5,53 +5,67 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/assets/styles/index.css">
+  <link rel="stylesheet" href="assets/styles/index.css">
   <title>Meetup Page Draft</title>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-<div id="app">
-  <div>
-    <div class="meetup-cover">
-      <h1 class="meetup-cover__title">Название митапа</h1>
+<div id="app" v-cloak>
+  <div class="main" v-if="meetapInfo">
+
+    <div class="meetup-cover" :style="meetapInfo.coverStyle">
+      <h1 class="meetup-cover__title">{{ meetapInfo.title }}</h1>
     </div>
 
     <div class="container">
       <div class="meetup">
         <div class="meetup__content">
           <h3>Описание</h3>
-          <p class="meetup-description">Описание митапа</p>
+          <p class="meetup-description">{{ meetapInfo.description }}</p>
 
           <h3>Программа</h3>
-          <p class="meetup-agenda__empty">Программа пока пуста, но когда-нибудь в ней обязательно что-нибудь появится!</p>
-          <div class="meetup-agenda">
-            <div class="meetup-agenda__item">
+          <template v-if="meetapInfo.agenda">
+            <div v-for="oneIvent in getAgendaMode" :key="oneIvent.id" class="meetup-agenda__item">
               <div class="meetup-agenda__item-col">
-                <img class="icon" alt="icon" src="/assets/icons/icon-cal-sm.svg" />
+                <img class="icon" alt="icon"
+                     :src="'assets/icons/icon-'+ agendaItemIcons[oneIvent.type] + '.svg'" />
               </div>
-              <div class="meetup-agenda__item-col">00:00 - 00:00</div>
+              <div class="meetup-agenda__item-col">{{ oneIvent.startsAt }} - {{ oneIvent.endsAt }}</div>
               <div class="meetup-agenda__item-col">
-                <h5 class="meetup-agenda__title">Название доклада</h5>
-                <p><span>Докладчик</span><span class="meetup-agenda__dot"></span><span class="meetup-agenda__lang">RU</span></p>
-                <p>Описание доклада</p>
+                <h5 class="meetup-agenda__title">{{ oneIvent.title }}</h5>
+                <p v-if="oneIvent.type === `talk`">
+                  <span> {{ oneIvent.speaker }}</span>
+                  <span class="meetup-agenda__dot"></span>
+                  <span class="meetup-agenda__lang">{{ oneIvent.language }}</span>
+                </p>
+                <p v-show="oneIvent.description !== null">{{ oneIvent.description }}</p>
               </div>
             </div>
+          </template>
 
+          <div v-else class="meetup-agenda__empty">Программа пока пуста, но когда-нибудь в ней обязательно что-нибудь
+            появится!
           </div>
+
         </div>
 
         <div class="meetup__aside">
           <ul class="info-list">
             <li>
-              <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-user.svg" />
-              Организатор
+              <img class="icon info-list__icon" alt="icon" src="assets/icons/icon-user.svg" />
+              {{ meetapInfo.organizer }}
             </li>
             <li>
-              <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-map.svg" />
-              Место
+              <img class="icon info-list__icon" alt="icon" src="assets/icons/icon-map.svg" />
+              {{ meetapInfo.place }}
             </li>
             <li>
-              <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-              <time datetime="2020-02-31">31 фев. 2020</time>
+              <img class="icon info-list__icon" alt="icon" src="assets/icons/icon-cal-lg.svg" />
+              <time datetime="2020-02-31">{{ getLocaleDate }}</time>
             </li>
           </ul>
         </div>

@@ -6,7 +6,14 @@
 </head>
 <body>
 
-<!-- Решение -->
+<div id="app">
+  <template v-for="item in 5">
+    <input type="radio" :value="item" v-model="selecting" >
+    <label>{{ item }}</label>
+  </template>
+  <br>
+  <span v-if="selecting !== null">{{ courseName }}</span>
+</div>
 
 <script type="module" src="script.js"></script>
 </body>
