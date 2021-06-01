@@ -18,19 +18,17 @@ export default {
     }
   },
 
-  data() {
-    return {
-      dateTime: new Date(this.date).toISOString().substr(0, 10)
-    }
-  },
+  computed: {
+    dateTime() {
+      return this.date ? new Date(this.date).toISOString().substr(0, 10) : '';
+    },
 
-  methods: {
-    getLocaleDate(date) {
-      return new Date(date).toLocaleString(navigator.language, {
+    localeDate() {
+      return this.date ? new Date(this.date).toLocaleString(navigator.language, {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-      });
+      }) : '';
     }
 
   },
@@ -47,7 +45,7 @@ export default {
       </li>
       <li>
         <img class="icon info-list__icon" alt="icon" src="/assets/icons/icon-cal-lg.svg" />
-        <time :datetime="dateTime">{{ getLocaleDate(this.date) }}</time>
+        <time :datetime="dateTime">{{ localeDate }}</time>
       </li>
     </ul>`,
 };
