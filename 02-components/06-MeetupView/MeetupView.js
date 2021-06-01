@@ -25,7 +25,7 @@ const MeetupView = {
 
   computed: {
     imageLink() {
-      return getImageUrlByImageId(this.meetup.imageId);
+      return this.meetup.imageId ? getImageUrlByImageId(this.meetup.imageId) : '';
     },
   },
 
@@ -41,7 +41,7 @@ const MeetupView = {
             <meetup-agenda :agenda="meetup.agenda" />
           </div>
           <div class="meetup__aside">
-            <meetup-info :organizer="meetup.organizer" :place="meetup.place" :date="meetup.date"/>
+            <meetup-info :organizer="meetup.organizer" :place="meetup.place" :date="new Date(meetup.date)"/>
           </div>
         </div>
       </div>
