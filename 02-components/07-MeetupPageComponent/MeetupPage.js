@@ -1,8 +1,6 @@
 import MeetupView from '../06-MeetupView/MeetupView.js';
 import { MEETUP_ID, fetchMeetup } from './data.js';
 
-const fetchMeetups = fetchMeetup(MEETUP_ID);
-
 const MeetupPage = {
   name: 'MeetupPage',
 
@@ -17,7 +15,7 @@ const MeetupPage = {
   },
 
   async mounted() {
-    this.meetup = await fetchMeetups;
+    this.meetup = await fetchMeetup(MEETUP_ID);
   },
 
   template: `<div v-if="meetup" class="container">
