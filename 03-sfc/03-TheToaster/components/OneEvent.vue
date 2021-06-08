@@ -1,43 +1,29 @@
 <template>
-  <div class="toasts">
-    <one-event v-for="toast in toasts" :key="toast.id" :class-toast="toast.classToast" :icon-toast="toast.iconToast" :message="toast.message">
-    </one-event>
+  <div class="toast toast_success" :class="classToast">
+    <app-icon :icon="iconToast" />
+    <span>{{ message }}</span>
   </div>
 </template>
 
 <script>
-import OneEvent from "./OneEvent";
-
-const DELAY = 5000;
+import AppIcon from './AppIcon';
 
 export default {
-  name: "TheToaster",
+  name: 'OneEvent',
 
-  components: { OneEvent },
+  components: { AppIcon },
 
-  data() {
-    return {
-      toasts: []
-    };
+  props: {
+    message: {
+      type: String
+    },
+    iconToast: {
+      type: String
+    },
+    classToast: {
+      type: String
+    },
   },
-
-  methods: {
-    error(message) {
-      this.toasts.push({message, classToast: 'toast_error', iconToast: 'alert-circle'});
-      this.toastSplice();
-    },
-    success(message) {
-      this.toasts.push({message, classToast: 'toast_success', iconToast: 'check-circle'});
-      this.toastSplice();
-
-    },
-
-    toastSplice() {
-        window.setInterval(() => {
-          this.toasts.splice(0, 1);
-        }, DELAY)
-    }
-  }
 };
 </script>
 
