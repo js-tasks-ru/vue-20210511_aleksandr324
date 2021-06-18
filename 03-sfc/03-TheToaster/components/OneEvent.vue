@@ -1,5 +1,5 @@
 <template>
-  <div class="toast toast_success" :class="classToast">
+  <div class="toast" :class="classToast">
     <app-icon :icon="iconToast" />
     <span>{{ message }}</span>
   </div>
